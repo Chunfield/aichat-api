@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+console.log("📦 CORS 模块被加载了！");
 
 const ALLOWED_ORIGIN =
   process.env.NODE_ENV === "development"
