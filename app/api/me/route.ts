@@ -2,10 +2,11 @@
 import jwt from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { withCORS } from "@/lib/cors";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
-export async function GET(req: NextRequest) {
+export const GET = withCORS(async (req: NextRequest) => {
   try {
     // 1. 从 Cookie 中获取 token
     const token = req.cookies.get("token")?.value;
@@ -14,7 +15,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "未登录" }, { status: 401 });
     }
 
-    // 2. 验证 JWT 并解码
+    // 2. 验证 JWT
     let decoded: { userId: string };
     try {
       decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
@@ -25,6 +26,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    // 3. 查询用户
     const user = await prisma.users.findUnique({
       where: { id: parseInt(decoded.userId) },
       select: {
@@ -43,4 +45,4 @@ export async function GET(req: NextRequest) {
     console.error("GET /api/auth/me 错误:", error);
     return NextResponse.json({ error: "服务器错误" }, { status: 500 });
   }
-}
+});
