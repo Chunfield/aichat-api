@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const ALLOWED_ORIGIN =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:5173"
-    : "https://ai-chat-azure-one.vercel.app/";
-
+// const ALLOWED_ORIGIN =
+//   process.env.NODE_ENV === "development"
+//     ? "http://localhost:5173"
+//     : "https://ai-chat-azure-one.vercel.app/";
+const ALLOWED_ORIGIN = "https://ai-chat-azure-one.vercel.app";
 export function withCORS(
   handler: (req: NextRequest) => Promise<Response> | Response
 ) {
