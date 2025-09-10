@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// const ALLOWED_ORIGIN =
-//   process.env.NODE_ENV === "development"
-//     ? "http://localhost:5173"
-//     : "https://ai-chat-azure-one.vercel.app/";
-const ALLOWED_ORIGIN = "https://ai-chat-azure-one.vercel.app";
+const ALLOWED_ORIGIN =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5173"
+    : "https://ai-chat-azure-one.vercel.app";
 export function withCORS(
   handler: (req: NextRequest) => Promise<Response> | Response
 ) {
   return async (req: NextRequest): Promise<NextResponse> => {
+    console.log("🔧 CORS Middleware 执行了！请求路径:", req.url);
+    console.log("🧩 请求方法:", req.method);
     // 1. 处理 OPTIONS 预检请求
     if (req.method === "OPTIONS") {
       return NextResponse.json(
