@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import prisma from "@/lib/prisma";
-import { withCORS } from "@/lib/cors";
 
-export const POST = withCORS(async (req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
   try {
     const body = await req.json();
     const { username, password } = body;
@@ -62,4 +61,4 @@ export const POST = withCORS(async (req: NextRequest) => {
       { status: 500 }
     );
   }
-});
+};

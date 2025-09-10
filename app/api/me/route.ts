@@ -2,11 +2,10 @@
 import jwt from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { withCORS } from "@/lib/cors";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
-export const GET = withCORS(async (req: NextRequest) => {
+export const GET = async (req: NextRequest) => {
   try {
     // 1. 从 Cookie 中获取 token
     const token = req.cookies.get("token")?.value;
@@ -45,4 +44,4 @@ export const GET = withCORS(async (req: NextRequest) => {
     console.error("GET /api/auth/me 错误:", error);
     return NextResponse.json({ error: "服务器错误" }, { status: 500 });
   }
-});
+};
